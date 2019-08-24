@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CODEWARS;
+package codewars;
 
 import java.util.Arrays;
 
 /**
  *
- * @author Alexander Chelpanov
- * Date: 22.08.2019
+ * @author Alex
+ * 
+ * 
  * 
  * Sudoku Background
  * Sudoku is a game played on a 9x9 grid. The goal of the game is to fill all 
@@ -28,10 +29,6 @@ import java.util.Arrays;
  * 
  * The board is always 9 cells by 9 cells, and every cell only contains 
  * integers from 0 to 9.
- * 
- * 
- * 
- * P.S. My desicion (beta version) passed only sample tests!.
  */
 public class SudokuValidator {
     public static void main(String[] args) {
@@ -56,7 +53,7 @@ public class SudokuValidator {
             {2, 8, 7, 4, 1, 9, 6, 3, 5},
             {3, 0, 0, 4, 8, 1, 1, 7, 9}};
         int [][] s = new int [0][0];
-        System.out.println(check(sudoku));
+        System.out.println(check(sudoku));       
         sudoku[0][0]++;
         sudoku[1][1]++;
         sudoku[0][1]--;
@@ -71,43 +68,59 @@ public class SudokuValidator {
         System.out.println(check(sudoku2));
         System.out.println(check(s));
     }
+
     public static boolean check(int[][] sudoku) {
-        int colCounter = 0;        
-        int [] arr = new int [sudoku.length];
+        if (sudoku.length==0) {
+            return false;
+        }
+        int colCounter = 0;
+        int rowCounter = 0;
+        int counter = 0;
+        int index = 0;
+        int[] arr = new int[sudoku.length];
         for (int i = 0; i < sudoku.length; i++) {
-            for (int j = 0; j < sudoku.length; j++) {        
-                if (sudoku[i][j]==0) {
+            for (int j = 0; j < sudoku.length; j++) {
+                if (sudoku[i][j] == 0) {
                     return false;
                 }
-                arr[j]=sudoku[i][j];
+                arr[j] = sudoku[i][j];
                 for (int k = 0; k < arr.length; k++) {
-                    if (arr[k]==sudoku[i][j] && k!=j) {
+                    if (arr[k] == sudoku[i][j] && k != j) {
                         return false;
                     }
                 }
             }
             Arrays.fill(arr, 0);
         }
-        while (colCounter < sudoku.length) {
-            int i = 0;
-            while (i < sudoku.length) {
-                for (; i < sudoku.length; i++) {
-                    for (int j = colCounter; j <= colCounter; j++) {
-                        if (sudoku[i][j] == 0) {
+        while (true) {
+            for (int i = rowCounter; i < rowCounter+3; i++) {
+                for (int j = colCounter; j < colCounter+3; j++) {
+                    arr[index] = sudoku[i][j];
+                    counter++;
+                    for (int k = 0; k < arr.length; k++) {
+                        if (arr[k] == sudoku[i][j] && k!=index) {
                             return false;
                         }
-                        arr[i] = sudoku[i][j];
-                        for (int k = 0; k < arr.length; k++) {
-                            if (sudoku[i][j]==arr[k] && k!=i) {
-                                return false;
-                            }
-                        }
                     }
+                    index++;
                 }
             }
+            if (rowCounter==sudoku.length-1) {
+                counter++;
+            }
             Arrays.fill(arr, 0);
-            colCounter++;
-        }
+            if (counter==81) {
+                break;
+            }
+            index=0;
+            if (colCounter>4) {
+                rowCounter += 3;
+                colCounter = 0;
+            }else{
+                rowCounter=0;
+                colCounter += 3;
+            }     
+        }       
         return true;
     }
 }
