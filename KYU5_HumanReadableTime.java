@@ -33,7 +33,7 @@ public class KYU5_HumanReadableTime {
     public static String makeReadable(int seconds) {
         int hours = seconds / 3600;//получаем количество часов
         int remMinInsec = seconds - (hours * 3600);//получаемя количество минут в секундах после вычета часов
-        int min = remMinInsec / 60;//получае количество минут
+        int min = remMinInsec / 60;//получаем количество минут
         int sec = seconds-(hours*3600)-(min*60);//получаем секунды
         return String.format("%02d:%02d:%02d", hours, min, sec);
     }
