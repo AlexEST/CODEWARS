@@ -20,7 +20,7 @@
  * You can find some examples in the test fixtures.
  * 
  */
-public class KUY5_HumanReadableTime {
+public class KYU5_HumanReadableTime {
 
     public static void main(String[] args) {
         System.out.println(makeReadable(359999));
